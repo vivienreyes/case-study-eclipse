@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> findByName(String model, String licenseno, int weight, int capacity) {
+	public List<User> findByName(String model, String licenseno, String weight, String capacity) {
 		return userDao.findByName(model, licenseno, weight, capacity);
 	}
 
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService{
 		if (validate(user)) {
 			userDao.add(user);
 		} else {
-			throw new IllegalArgumentException("Fields model , licenseno, weight and capacity cannot be blank.");
+			throw new IllegalArgumentException("Fields cannot be blank.");
 		}
 	}
 
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
 				userDao.add(user);
 			}
 		} else {
-			throw new IllegalArgumentException("Fields model , licenseno, weight and capacity cannot be blank.");
+			throw new IllegalArgumentException("Fields cannot be blank.");
 		}
 	}
 

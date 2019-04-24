@@ -51,7 +51,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 
 	private void createUserTable() {
 		String createSql = "CREATE TABLE USERS " + "(id INTEGER IDENTITY PRIMARY KEY, " + " model VARCHAR(255), "
-				+ " licenseno VARCHAR(255), " + " weight INTEGER " + " capacity INTEGER)" ;
+				+ " licenseno VARCHAR(255), " + " weight VARCHAR(255), " + " capacity VARCHAR(255))" ;
 
 		try (Connection conn = dataSource.getConnection(); Statement stmt = conn.createStatement()) {
 
@@ -66,16 +66,16 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 	private void insertInitUsers() {
 		
 		add(new User());
-		add(new User("Nissan","ZXC 1223", 90, 9000));
-		add(new User("Toyota","JHG 5432", 90, 9000));
-		add(new User("Toyota","GTH 9876", 90, 9000));
-		add(new User("Nissan","PYT 7639", 90, 9000));
+		add(new User("Nissan","ZXC 1223", "90", "9000"));
+		add(new User("Toyota","JHG 5432", "90", "9000"));
+		add(new User("Toyota","GTH 9876", "90", "9000"));
+		add(new User("Nissan","PYT 7639", "90", "9000"));
 	}
 
 	@Override
 	public List<User> findAll() {
 
-		return findByName(null, null, 0, 0);
+		return findByName(null, null, null, null);
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 
 				if (results.next()) {
 					user = new User(Long.valueOf(results.getInt("id")), results.getString("model"),
-							results.getString("licenseno"), results.getInt("weight"), results.getInt("capacity"));
+							results.getString("licenseno"), results.getString("weight"), results.getString("capacity"));
 				}
 
 			} catch (SQLException e) {
@@ -105,24 +105,24 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 	}
 
 	@Override
-	public List<User> findByName(String model, String licenseno, int weight, int capacity) {
+	public List<User> findByName(String model, String licenseno, String weight, String capacity) {
 		List<User> users = new ArrayList<>();
 
-		String sql = "SELECT id, model, licenseno, weight, capacity FROM USERS WHERE model LIKE ?, licenseno LIKE ?, weight LIKE ? AND capacity LIKE ? ";
+		String sql = "SELECT id, model, licenseno, weight, capacity FROM USERS WHERE model LIKE ? AND licenseno LIKE ? AND weight LIKE ? AND capacity LIKE ? ";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
 			ps.setString(1, createSearchValue(model));
 			ps.setString(2, createSearchValue(licenseno));
-			ps.setInt(3, createSearchValue(weight));
-			ps.setInt(4, createSearchValue(capacity));
+			ps.setString(3, createSearchValue(weight));
+			ps.setString(4, createSearchValue(capacity));
 			
 			
 			ResultSet results = ps.executeQuery();
 
 			while (results.next()) {
 				User user = new User(Long.valueOf(results.getInt("id")), results.getString("model"),
-						results.getString("licenseno"), results.getInt("weight"), results.getInt("capacity"));
+						results.getString("licenseno"), results.getString("weight"), results.getString("capacity"));
 				users.add(user);
 			}
 
@@ -134,16 +134,17 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 		return users;
 	}
 
-	private int createSearchValue(int capacity) {
+//	private String createSearchValue1(String capacity) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
+//		return 0;
+//	}
 
 	//private int createSearchValue(int date) {
 		// TODO Auto-generated method stub
 		//return 0;
 	//}
 
+	
 	private String createSearchValue(String string) {
 		
 		String value;
@@ -166,8 +167,8 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 
 			ps.setString(1, user.getModel());
 			ps.setString(2, user.getLicenseNo());
-			ps.setInt(3, user.getWeight());
-			ps.setInt(4, user.getCapacity());
+			ps.setString(3, user.getWeight());
+			ps.setString(4, user.getCapacity());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -185,8 +186,8 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 			ps.setString(1, user.getModel());
 			ps.setString(2, user.getLicenseNo());
 			ps.setLong(3, user.getId());
-			ps.setInt(4, user.getWeight());
-			ps.setInt(5, user.getCapacity());
+			ps.setString(4, user.getWeight());
+			ps.setString(5, user.getCapacity());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {

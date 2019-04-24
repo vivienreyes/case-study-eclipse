@@ -35,8 +35,8 @@ public class UsersController {
 	public List<User> getUsers(
 			@QueryParam("model") String model, 
 			@QueryParam("licenseno") String licenseno,
-			@QueryParam("weight") int weight,
-			@QueryParam("capacity") int capacity ){
+			@QueryParam("weight") String weight,
+			@QueryParam("capacity") String capacity ){
 
 		try {
 			List<User> users;
@@ -75,7 +75,7 @@ public class UsersController {
 
 		try {
 			userService.add(user);
-			String result = "User saved : " + user.getModel() + " " + user.getLicenseNo() + " " + user.getWeight() + " " + user.getCapacity();
+			String result = "User saved : " + user.getModel() + " " + user.getLicenseNo() + " " + user.getWeight() + " " + user.getCapacity() + " ";
 			return Response.status(201).entity(result).build();
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
