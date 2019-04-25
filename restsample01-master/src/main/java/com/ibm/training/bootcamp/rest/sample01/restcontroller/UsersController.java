@@ -36,8 +36,7 @@ public class UsersController {
 			@QueryParam("model") String model, 
 			@QueryParam("licenseno") String licenseno,
 			@QueryParam("weight") String weight,
-			@QueryParam("capacity") String capacity, 
-			@QueryParam("dateAcquired") String dateAcquired){
+			@QueryParam("capacity") String capacity){
 
 		try {
 			List<User> users;
@@ -45,7 +44,7 @@ public class UsersController {
 			if (StringUtils.isBlank(model)) {
 				users = userService.findAll();
 			} else {
-				users = userService.findByName(model, licenseno, weight, capacity, dateAcquired);
+				users = userService.findByName(model, licenseno, weight, capacity);
 			}
 						
 			return users;
@@ -76,7 +75,7 @@ public class UsersController {
 
 		try {
 			userService.add(user);
-			String result = "User saved : " + user.getModel() + " " + user.getLicenseNo() + " " + user.getWeight() + " " + user.getCapacity() + " " + user.getDateAcquired() + " ";
+			String result = "User saved : " + user.getModel() + " " + user.getLicenseNo() + " " + user.getWeight() + " " + user.getCapacity() + " ";
 			return Response.status(201).entity(result).build();
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
@@ -90,7 +89,7 @@ public class UsersController {
 
 		try {
 			userService.upsert(user);
-			String result = "User updated : " + user.getModel() + " " + user.getLicenseNo() + " " + user.getWeight() + " " + user.getCapacity() + " " + user.getDateAcquired();
+			String result = "User updated : " + user.getModel() + " " + user.getLicenseNo() + " " + user.getWeight() + " " + user.getCapacity() + " ";
 			return Response.status(200).entity(result).build();
 		} catch (Exception e) {
 			throw new WebApplicationException(e);

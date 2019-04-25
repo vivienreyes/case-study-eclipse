@@ -7,23 +7,22 @@ public class User {
 	private String licenseno;
 	private String weight;
 	private String capacity;
-	private String dateAcquired;
 	
 	public User() {
 		
 	}
 	
-	public User(String model, String licenseno, String weight, String capacity, String dateAcquired) {
-		this(null, model, licenseno, weight, capacity, dateAcquired);
+	public User(String model, String licenseno, String weight, String capacity) {
+		this(null, model, licenseno, weight, capacity);
 	}
 
-	public User(Long id, String model, String licenseno, String weight, String capacity, String dateAcquired) {
+	public User(Long id, String model, String licenseno, String weight, String capacity) {
 		this.id = id;
 		this.model = model;
 		this.licenseno = licenseno;
 		this.weight = weight;
 		this.capacity = capacity;
-		this.dateAcquired = dateAcquired;
+		
 	}
 	
 	public Long getId() {
@@ -66,13 +65,5 @@ public class User {
 		this.capacity = capacity;
 	}
 	
-	public String getDateAcquired() {
-		return dateAcquired;
-	}
-	
-	public void setDateAcquired(String dateAcquired) {
-		this.dateAcquired = dateAcquired;
-	}
-	
-	
+		
 }

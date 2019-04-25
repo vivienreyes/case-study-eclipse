@@ -10,7 +10,7 @@ public interface UserService {
 	
 	public User find(Long id);
 	
-	public List<User> findByName(String model, String licenseno, String weight, String capacity, String dateAcquired);
+	public List<User> findByName(String model, String licenseno, String weight, String capacity);
 	
 	public void add(User user);
 	
