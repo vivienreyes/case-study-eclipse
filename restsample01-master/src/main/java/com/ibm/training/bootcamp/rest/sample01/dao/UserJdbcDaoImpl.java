@@ -51,7 +51,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 
 	private void createUserTable() {
 		String createSql = "CREATE TABLE USERS " + "(id INTEGER IDENTITY PRIMARY KEY, " + " model VARCHAR(255), "
-				+ " licenseno VARCHAR(255), " + " weight VARCHAR(255), " + " capacity VARCHAR(255))";
+				+ " licenseno VARCHAR(255), " + " weight VARCHAR(255), " + " capacity VARCHAR(255)," + "date VARCHAR(255))";
 
 		try (Connection conn = dataSource.getConnection(); Statement stmt = conn.createStatement()) {
 
@@ -66,16 +66,16 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 	private void insertInitUsers() {
 		
 		add(new User());
-		add(new User("Nissan","ZXC 1223", "90", "9000"));
-		add(new User("Toyota","JHG 5432", "90", "9000"));
-		add(new User("Toyota","GTH 9876", "90", "9000"));
-		add(new User("Nissan","PYT 7639", "90", "9000"));
+		add(new User("Nissan","ZXC 1223", "90", "9000", "04/22/2019"));
+		add(new User("Toyota","JHG 5432", "90", "9000", "04/23/2019"));
+		add(new User("Toyota","GTH 9876", "90", "9000", "04/24/2019"));
+		add(new User("Nissan","PYT 7639", "90", "9000", "04/25/2019"));
 	}
 
 	@Override
 	public List<User> findAll() {
 
-		return findByName(null, null, null, null);
+		return findByName(null, null, null, null, null);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 		User user = null;
 
 		if (id != null) {
-			String sql = "SELECT id, model, licenseno, weight, capacity FROM USERS where id = ?";
+			String sql = "SELECT id, model, licenseno, weight, capacity, date FROM USERS where id = ?";
 			try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
 				ps.setInt(1, id.intValue());
@@ -92,7 +92,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 
 				if (results.next()) {
 					user = new User(Long.valueOf(results.getInt("id")), results.getString("model"),
-							results.getString("licenseno"), results.getString("weight"), results.getString("capacity"));
+							results.getString("licenseno"), results.getString("weight"), results.getString("capacity"), results.getString("date"));
 				}
 
 			} catch (SQLException e) {
@@ -105,22 +105,23 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 	}
 
 	@Override
-	public List<User> findByName(String model, String licenseno, String weight, String capacity) {
+	public List<User> findByName(String model, String licenseno, String weight, String capacity, String date) {
 		List<User> users = new ArrayList<>();
 
-		String sql = "SELECT id, model, licenseno, weight, capacity FROM USERS WHERE model LIKE ? AND licenseno LIKE ? AND weight LIKE ? AND capacity LIKE ? ";
+		String sql = "SELECT id, model, licenseno, weight, capacity, date FROM USERS WHERE model LIKE ? AND licenseno LIKE ? AND weight LIKE ? AND capacity LIKE ? AND date LIKE ? ";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
 			ps.setString(1, createSearchValue(model));
 			ps.setString(2, createSearchValue(licenseno));
 			ps.setString(3, createSearchValue(weight));
-			ps.setString(4, createSearchValue(capacity));	
+			ps.setString(4, createSearchValue(capacity));
+			ps.setString(5, createSearchValue(date));
 			ResultSet results = ps.executeQuery();
 
 			while (results.next()) {
 				User user = new User(Long.valueOf(results.getInt("id")), results.getString("model"),
-						results.getString("licenseno"), results.getString("weight"), results.getString("capacity"));
+						results.getString("licenseno"), results.getString("weight"), results.getString("capacity"), results.getString("date"));
 				users.add(user);
 			}
 
@@ -159,7 +160,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 	@Override
 	public void add(User user) {
 		
-		String insertSql = "INSERT INTO USERS (model, licenseno, weight, capacity) VALUES (?, ?, ?, ?)";
+		String insertSql = "INSERT INTO USERS (model, licenseno, weight, capacity, date) VALUES (?, ?, ?, ?, ?)";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(insertSql)) {
 
@@ -167,6 +168,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 			ps.setString(2, user.getLicenseNo());
 			ps.setString(3, user.getWeight());
 			ps.setString(4, user.getCapacity());
+			ps.setString(5, user.getDate());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -177,7 +179,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 
 	@Override
 	public void update(User user) {
-		String updateSql = "UPDATE users SET model = ?, licenseno = ?, weight = ?, capacity = ? WHERE id = ?";
+		String updateSql = "UPDATE users SET model = ?, licenseno = ?, weight = ?, capacity = ?, date = ?WHERE id = ?";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
 
@@ -186,6 +188,7 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 			ps.setLong(3, user.getId());
 			ps.setString(4, user.getWeight());
 			ps.setString(5, user.getCapacity());
+			ps.setString(6, user.getDate());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {

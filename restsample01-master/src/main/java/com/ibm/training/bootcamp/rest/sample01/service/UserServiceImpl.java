@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> findByName(String model, String licenseno, String weight, String capacity) {
-		return userDao.findByName(model, licenseno, weight, capacity);
+	public List<User> findByName(String model, String licenseno, String weight, String capacity, String date) {
+		return userDao.findByName(model, licenseno, weight, capacity, date);
 	}
 
 	@Override

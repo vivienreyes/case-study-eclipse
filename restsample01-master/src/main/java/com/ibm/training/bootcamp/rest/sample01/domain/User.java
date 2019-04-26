@@ -7,21 +7,23 @@ public class User {
 	private String licenseno;
 	private String weight;
 	private String capacity;
+	private String date;
 	
 	public User() {
 		
 	}
 	
-	public User(String model, String licenseno, String weight, String capacity) {
-		this(null, model, licenseno, weight, capacity);
+	public User(String model, String licenseno, String weight, String capacity, String date) {
+		this(null, model, licenseno, weight, capacity, date);
 	}
 
-	public User(Long id, String model, String licenseno, String weight, String capacity) {
+	public User(Long id, String model, String licenseno, String weight, String capacity, String date) {
 		this.id = id;
 		this.model = model;
 		this.licenseno = licenseno;
 		this.weight = weight;
 		this.capacity = capacity;
+		this.date = date;
 		
 	}
 	
@@ -63,6 +65,14 @@ public class User {
 	
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+	
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 		
