@@ -4,23 +4,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hsqldb.jdbc.JDBCDataSource;
+
 
 import com.ibm.training.bootcamp.rest.sample01.domain.User;
 
-public class UserJdbcDaoImpl<Int> implements UserDao {
+public class UserJdbcDaoImpl extends Trucking implements UserDao {
 
-	@SuppressWarnings("rawtypes")
+
 	private static UserJdbcDaoImpl INSTANCE;
 
-	private JDBCDataSource dataSource;
+	
 
-	@SuppressWarnings("rawtypes")
+
 	static public UserJdbcDaoImpl getInstance() {
 
 		UserJdbcDaoImpl instance;
@@ -38,39 +38,30 @@ public class UserJdbcDaoImpl<Int> implements UserDao {
 		init();
 	}
 
-	private void init() {
-		dataSource = new JDBCDataSource();
-		dataSource.setDatabase("jdbc:hsqldb:mem:USER");
-		dataSource.setUser("username");
-		dataSource.setPassword("password");
+	
 
-		createUserTable();
-		insertInitUsers();
-
-	}
-
-	private void createUserTable() {
-		String createSql = "CREATE TABLE USERS " + "(id INTEGER IDENTITY PRIMARY KEY, " + " model VARCHAR(255), "
-				+ " licenseno VARCHAR(255), " + " weight VARCHAR(255), " + " capacity VARCHAR(255)," + "date VARCHAR(255))";
-
-		try (Connection conn = dataSource.getConnection(); Statement stmt = conn.createStatement()) {
-
-			stmt.executeUpdate(createSql);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void insertInitUsers() {
-		
-		add(new User());
-		add(new User("Nissan","ZXC 1223", "90", "9000", "04/22/2019"));
-		add(new User("Toyota","JHG 5432", "90", "9000", "04/23/2019"));
-		add(new User("Toyota","GTH 9876", "90", "9000", "04/24/2019"));
-		add(new User("Nissan","PYT 7639", "90", "9000", "04/25/2019"));
-	}
+//	private void createUserTable() {
+//		String createSql = "CREATE TABLE USERS " + "(id INTEGER IDENTITY PRIMARY KEY, " + " model VARCHAR(255), "
+//				+ " licenseno VARCHAR(255), " + " weight VARCHAR(255), " + " capacity VARCHAR(255)," + "date VARCHAR(255))";
+//
+//		try (Connection conn = dataSource.getConnection(); Statement stmt = conn.createStatement()) {
+//
+//			stmt.executeUpdate(createSql);
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+//		}
+//	}
+//
+//	private void insertInitUsers() {
+//		
+//		add(new User());
+//		add(new User("Nissan","ZXC 1223", "90", "9000", "04/22/2019"));
+//		add(new User("Toyota","JHG 5432", "90", "9000", "04/23/2019"));
+//		add(new User("Toyota","GTH 9876", "90", "9000", "04/24/2019"));
+//		add(new User("Nissan","PYT 7639", "90", "9000", "04/25/2019"));
+//	}
 
 	@Override
 	public List<User> findAll() {
