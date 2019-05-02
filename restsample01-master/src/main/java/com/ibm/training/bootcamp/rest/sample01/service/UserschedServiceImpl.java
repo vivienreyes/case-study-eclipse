@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ibm.training.bootcamp.rest.sample01.dao.UserschedDao;
 import com.ibm.training.bootcamp.rest.sample01.dao.UserschedJdbcDaoImpl;
+import com.ibm.training.bootcamp.rest.sample01.domain.User;
 import com.ibm.training.bootcamp.rest.sample01.domain.Usersched;
 
 @SuppressWarnings("unused")
@@ -35,9 +36,9 @@ public class UserschedServiceImpl {
 		return userschedDao.findByName(name, load, dtstart, dtend, status);
 	}
 
-	public void add(Usersched usersched) {
-		if (validate(usersched)) {
-			userschedDao.add(usersched);
+	public void add(Usersched user) {
+		if (validate(user)) {
+			userschedDao.add(user);
 		} else {
 			throw new IllegalArgumentException("Fields cannot be blank.");
 		}

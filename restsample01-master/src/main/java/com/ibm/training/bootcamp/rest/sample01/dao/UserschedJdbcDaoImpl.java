@@ -11,24 +11,23 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ibm.training.bootcamp.rest.sample01.domain.Usersched;
 
-public abstract class UserschedJdbcDaoImpl extends Schedule implements UserschedDao {
+public abstract class UserschedJdbcDaoImpl extends Trucking implements UserschedDao {
 	
-//private static UserschedJdbcDaoImpl INSTANCE;
+private static UserschedJdbcDaoImpl INSTANCE;
 
 
+static public UserschedJdbcDaoImpl getInstance() {
 
-//	static public UserschedJdbcDaoImpl getInstance() {
-//
-//		UserschedJdbcDaoImpl instance;
-//		if (INSTANCE != null) {
-//			instance = INSTANCE;
-//		} else {
-//			instance = new UserschedJdbcDaoImpl();
-//			INSTANCE = instance;
-//		}
-//
-//		return instance;
-//	}
+		UserschedJdbcDaoImpl instance = null;
+		if (INSTANCE != null) {
+			instance = INSTANCE;
+		} else {
+			//instance = new UserschedJdbcDaoImpl();
+			INSTANCE = instance;
+		}
+
+		return instance;
+	}
 
 	private UserschedJdbcDaoImpl() {
 		init();

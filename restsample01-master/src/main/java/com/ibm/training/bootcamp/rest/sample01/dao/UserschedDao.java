@@ -13,9 +13,9 @@ public interface UserschedDao {
 	
 	public List<Usersched> findByName(String name, String load, String dtstart, String dtend, String status);
 	
-	public void add(Usersched usersched);
+	public void add(Usersched user);
 	
-	public void update(Usersched usersched);
+	public void update(Usersched user);
 	
 	public void delete(Long id);
 

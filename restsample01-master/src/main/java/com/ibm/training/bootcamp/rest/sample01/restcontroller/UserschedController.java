@@ -14,12 +14,15 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.ibm.training.bootcamp.rest.sample01.domain.Usersched;
+import com.ibm.training.bootcamp.rest.sample01.service.UserschedService;
 import com.ibm.training.bootcamp.rest.sample01.service.UserschedServiceImpl;
 
-@Path("/users")
+@SuppressWarnings("unused")
+@Path("/usersched")
 
 public class UserschedController {
 	
@@ -75,11 +78,11 @@ public class UserschedController {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUsersched(Usersched usersched) {
+	public Response addUsersched(Usersched user) {
 
 		try {
-			userschedService.add(usersched);
-			String result = "User saved : " + usersched.getName() + " " + usersched.getLoad() + " " + usersched.getDtstart() + " " + usersched.getDtend() + " " + usersched.getStatus() + " ";
+			userschedService.add(user);
+			String result = "User saved : " + user.getName() + " " + user.getLoad() + " " + user.getDtstart() + " " + user.getDtend() + " " + user.getStatus() + " ";
 			return Response.status(201).entity(result).build();
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
@@ -89,11 +92,11 @@ public class UserschedController {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(Usersched usersched) {
+	public Response updateUser(Usersched user) {
 
 		try {
-			userschedService.upsert(usersched);
-			String result = "User updated : " + usersched.getName() + " " + usersched.getLoad() + " " + usersched.getDtstart() + " " + usersched.getDtend() + " " + usersched.getStatus() + " ";
+			userschedService.upsert(user);
+			String result = "User updated : " + user.getName() + " " + user.getLoad() + " " + user.getDtstart() + " " + user.getDtend() + " " + user.getStatus() + " ";
 			return Response.status(200).entity(result).build();
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
@@ -115,26 +118,18 @@ public class UserschedController {
 		}
 	}
 	
-	@DELETE
-	@Path("{tripid}")
-	public Response deleteUsersched(@PathParam("tripid") String tripid) {
-
-		try {
-			Long longTripId = Long.parseLong(tripid);
-			userschedService.delete(longTripId);
-			String result = "User deleted";
-			return Response.status(200).entity(result).build();
-		} catch (Exception e) {
-			throw new WebApplicationException(e);
-		}
-	}
-
-	public Long getLongTripId() {
-		return longTripId;
-	}
-
-	public void setLongTripId(Long longTripId) {
-		this.longTripId = longTripId;
-	}
+//	@DELETE
+//	@Path("{tripid}")
+//	public Response deleteUsersched(@PathParam("tripid") String tripid) {
+//
+//		try {
+//			Long longTripId = Long.parseLong(tripid);
+//			userschedService.delete(longTripId);
+//			String result = "User deleted";
+//			return Response.status(200).entity(result).build();
+//		} catch (Exception e) {
+//			throw new WebApplicationException(e);
+//		}
+//	}
 
 }

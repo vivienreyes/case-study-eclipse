@@ -8,6 +8,8 @@ public class User {
 	private String weight;
 	private String capacity;
 	private String date;
+	@SuppressWarnings("unused")
+	private String name;
 	
 	public User() {
 		
@@ -74,6 +76,6 @@ public class User {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 		
 }
