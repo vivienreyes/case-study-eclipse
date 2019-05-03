@@ -11,8 +11,6 @@ public abstract List<Usersched> findAll();
 	
 	public abstract Usersched find(Long id);
 	
-	public abstract Usersched find1(Long tripid);
-	
 	public abstract List<Usersched> findByName(String name, String load, String dtstart, String dtend, String status);
 	
 	public abstract void add(Usersched user);
@@ -21,6 +19,5 @@ public abstract List<Usersched> findAll();
 	
 	public abstract void delete(Long id);
 	
-	public abstract void delete1(Long tripid);
 
 }

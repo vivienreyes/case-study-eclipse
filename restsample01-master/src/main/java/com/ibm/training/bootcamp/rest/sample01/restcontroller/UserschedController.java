@@ -27,7 +27,7 @@ import com.ibm.training.bootcamp.rest.sample01.service.UserschedServiceImpl;
 public class UserschedController {
 	
 	private UserschedServiceImpl userschedService;
-	private Long longTripId;
+	//private Long longTripId;
 
 	public UserschedController() {
 		this.userschedService = new UserschedServiceImpl();
@@ -63,14 +63,12 @@ public class UserschedController {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Usersched getUsersched(@PathParam("id") String id, String TripId) {
+	public Usersched getUsersched(@PathParam("id") String id) {
 
 		try {
 			Long longId = Long.parseLong(id);
-			Long longtripid = Long.parseLong(TripId);
 			Usersched user = userschedService.find(longId);
-			Usersched user1 = userschedService.find(longtripid);
-			return user1;
+			return user;
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
 		}

@@ -2,7 +2,6 @@ package com.ibm.training.bootcamp.rest.sample01.domain;
 
 public class Usersched {
 	
-	Long tripid;
 	Long id;
 	private String name;
 	private String load;
@@ -15,11 +14,11 @@ public class Usersched {
 	}
 	
 	public Usersched(String name, String load, String dtstart, String dtend, String status) {
-		this(null, null, name, load, dtstart, dtend, status);
+		this(null, name, load, dtstart, dtend, status);
 	}
 
-	public Usersched(Long tripid, Long id, String name, String load, String dtstart, String dtend, String status) {
-		this.tripid = tripid;
+	public Usersched(Long id, String name, String load, String dtstart, String dtend, String status) {
+
 		this.id = id;
 		this.name = name;
 		this.load = load;
@@ -27,14 +26,6 @@ public class Usersched {
 		this.dtend = dtend;
 		this.status = status;
 		
-	}
-	
-	public Long getTripId() {
-		return tripid;
-	}
-
-	public void setTripId(Long tripid) {
-		this.tripid = tripid;
 	}
 	
 	public Long getId() {

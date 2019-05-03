@@ -70,14 +70,14 @@ static public UserschedJdbcDaoImpl getInstance() {
 		Usersched user = null;
 
 		if (id != null) {
-			String sql = "SELECT tripid, id, name, load, dtstart, dtend, status FROM USERS where id = ?";
+			String sql = "SELECT id, name, load, dtstart, dtend, status FROM USERS where id = ?";
 			try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
 				ps.setInt(1, id.intValue());
 				ResultSet results = ps.executeQuery();
 
 				if (results.next()) {
-					user = new Usersched(Long.valueOf(results.getInt("tripid")), Long.valueOf(results.getInt("id")), results.getString("name"),
+					user = new Usersched(Long.valueOf(results.getInt("id")), results.getString("name"),
 							results.getString("load"), results.getString("dtstart"), results.getString("dtend"), results.getString("status"));
 				}
 
@@ -94,7 +94,7 @@ static public UserschedJdbcDaoImpl getInstance() {
 	public List<Usersched> findByName(String name, String load, String dtstart, String dtend, String status) {
 		List<Usersched> users = new ArrayList<>();
 
-		String sql = "SELECT tripid, id, name, load, dtstart, dtend, status FROM USERS WHERE name LIKE ? AND load LIKE ? AND dtstart LIKE ? AND dtend LIKE ? AND status LIKE ? ";
+		String sql = "SELECT id, name, load, dtstart, dtend, status FROM USERS WHERE name LIKE ? AND load LIKE ? AND dtstart LIKE ? AND dtend LIKE ? AND status LIKE ? ";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -106,8 +106,8 @@ static public UserschedJdbcDaoImpl getInstance() {
 			ResultSet results = ps.executeQuery();
 
 			while (results.next()) {
-				Usersched usersched = new Usersched(Long.valueOf(results.getInt("tripid")), Long.valueOf(results.getInt("id")), results.getString("model"),
-						results.getString("licenseno"), results.getString("weight"), results.getString("capacity"), results.getString("date"));
+				Usersched usersched = new Usersched(Long.valueOf(results.getInt("id")), results.getString("name"),
+						results.getString("load"), results.getString("dtstart"), results.getString("dtend"), results.getString("status"));
 				users.add(usersched);
 			}
 
@@ -161,10 +161,9 @@ static public UserschedJdbcDaoImpl getInstance() {
 			ps.setString(1, usersched.getName());
 			ps.setString(2, usersched.getLoad());
 			ps.setLong(3, usersched.getId());
-			ps.setLong(4, usersched.getTripId());
-			ps.setString(5, usersched.getDtstart());
-			ps.setString(6, usersched.getDtend());
-			ps.setString(7, usersched.getStatus());
+			ps.setString(4, usersched.getDtstart());
+			ps.setString(5, usersched.getDtend());
+			ps.setString(6, usersched.getStatus());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -189,20 +188,20 @@ static public UserschedJdbcDaoImpl getInstance() {
 	}
 
 	
-	@Override
-	public void delete1(Long tripid) {
-		String updateSql = "DELETE FROM users WHERE tripid = ?";
-
-		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
-
-			ps.setLong(1, tripid);
-			ps.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
+//	@Override
+//	public void delete1(Long tripid) {
+//		String updateSql = "DELETE FROM users WHERE tripid = ?";
+//
+//		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
+//
+//			ps.setLong(1, tripid);
+//			ps.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+//		}
+//	}
 
 
 }

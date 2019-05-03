@@ -23,12 +23,8 @@ public class UserschedServiceImpl {
 		return userschedDao.findAll();
 	}
 
-	public Usersched find1(Long id) {
+	public Usersched find(Long id) {
 		return userschedDao.find(id);
-	}
-	
-	public Usersched find(Long tripid) {
-		return userschedDao.find(tripid);
 	}
 
 
@@ -56,26 +52,23 @@ public class UserschedServiceImpl {
 		}
 	}
 	
-	public void upsert1(Usersched usersched) {
-		if (validate(usersched)) {
-			if(usersched.getTripId() != null && usersched.getTripId() >= 0) {
-				userschedDao.update(usersched);
-			} else {
-				userschedDao.add(usersched);
-			}
-		} else {
-			throw new IllegalArgumentException("Fields cannot be blank.");
-		}
-	}
+//	public void upsert1(Usersched usersched) {
+//		if (validate(usersched)) {
+//			if(usersched.getTripId() != null && usersched.getTripId() >= 0) {
+//				userschedDao.update(usersched);
+//			} else {
+//				userschedDao.add(usersched);
+//			}
+//		} else {
+//			throw new IllegalArgumentException("Fields cannot be blank.");
+//		}
+//	}
 
 	public void delete(Long id) {
 		userschedDao.delete(id);
 	}
 	
-	public void delete1(Long tripid) {
-		userschedDao.delete(tripid);
-	}
-	
+
 	private boolean validate(Usersched usersched) {
 		return !StringUtils.isAnyBlank(usersched.getName(), usersched.getLoad());
 	}
