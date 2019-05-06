@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.ibm.training.bootcamp.rest.sample01.dao.UserJdbcDaoImpl;
 import com.ibm.training.bootcamp.rest.sample01.dao.UserschedDao;
 import com.ibm.training.bootcamp.rest.sample01.dao.UserschedJdbcDaoImpl;
 import com.ibm.training.bootcamp.rest.sample01.domain.User;
@@ -14,11 +15,11 @@ public class UserschedServiceImpl {
 	
 	UserschedDao userschedDao;
 
-//	public UserschedServiceImpl() {
-//		this.userschedDao = UserschedJdbcDaoImpl.getInstance();
-//		//this.userDao = UserHashMapDaoImpl.getInstance();
-//	}
-//	
+	public UserschedServiceImpl() {
+		this.userschedDao = UserschedJdbcDaoImpl.getInstance();
+		
+	}
+	
 	public List<Usersched> findAll() {
 		return userschedDao.findAll();
 	}

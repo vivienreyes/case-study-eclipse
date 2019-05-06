@@ -86,7 +86,7 @@ public class UserJdbcDaoImpl extends Trucking implements UserDao {
 							results.getString("licenseno"), results.getString("weight"), results.getString("capacity"), results.getString("date"));
 				}
 
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -116,7 +116,7 @@ public class UserJdbcDaoImpl extends Trucking implements UserDao {
 				users.add(user);
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}

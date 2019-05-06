@@ -41,12 +41,14 @@ public class UserschedController {
 			@QueryParam("dtstart") String dtstart,
 			@QueryParam("dtend") String dtend,
 			@QueryParam("status") String status){
-
+		System.out.println("getUsers");
 		try {
 			List<Usersched> users;
 			
 			if (StringUtils.isBlank(name)) {
+				System.out.println("getUsers before findall");
 				users = userschedService.findAll();
+				System.out.println("getUsers after findAll");
 			} else {
 				users = userschedService.findByName(name, load, dtstart, dtend, status);
 			}
@@ -79,7 +81,9 @@ public class UserschedController {
 	public Response addUsersched(Usersched user) {
 
 		try {
+			System.out.println("Add before usersched");
 			userschedService.add(user);
+			System.out.println("Add after usersched");
 			String result = "User saved : " + user.getName() + " " + user.getLoad() + " " + user.getDtstart() + " " + user.getDtend() + " " + user.getStatus() + " ";
 			return Response.status(201).entity(result).build();
 		} catch (Exception e) {

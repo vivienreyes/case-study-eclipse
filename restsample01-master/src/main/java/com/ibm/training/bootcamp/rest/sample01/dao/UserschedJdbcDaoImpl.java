@@ -11,29 +11,27 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ibm.training.bootcamp.rest.sample01.domain.Usersched;
 
-public abstract class UserschedJdbcDaoImpl extends Trucking implements UserschedDao {
-	
-private static UserschedJdbcDaoImpl INSTANCE;
+public  class UserschedJdbcDaoImpl extends Trucking implements UserschedDao {
 
-
-static public UserschedJdbcDaoImpl getInstance() {
-
-		UserschedJdbcDaoImpl instance = null;
-		if (INSTANCE != null) {
-			instance = INSTANCE;
-		} else {
-			//instance = new UserschedJdbcDaoImpl();
-			INSTANCE = instance;
-		}
-
-		return instance;
-	}
+	private static UserschedJdbcDaoImpl INSTANCE;
 
 	private UserschedJdbcDaoImpl() {
 		init();
 	}
 
-	
+	static public UserschedJdbcDaoImpl getInstance() {
+
+		UserschedJdbcDaoImpl instance = null;
+		if (INSTANCE != null) {
+			instance = INSTANCE;
+		} else {
+			instance = new UserschedJdbcDaoImpl();
+			UserJdbcDaoImpl.getInstance();
+			INSTANCE = instance;
+		}
+
+		return instance;
+	}
 
 //	private void createUserTable() {
 //		String createSql = "CREATE TABLE USERS " + "(id INTEGER IDENTITY PRIMARY KEY, " + " model VARCHAR(255), "
@@ -60,7 +58,7 @@ static public UserschedJdbcDaoImpl getInstance() {
 
 	@Override
 	public List<Usersched> findAll() {
-
+		System.out.println("userschedjdbc findall");
 		return findByName(null, null, null, null, null);
 	}
 
@@ -78,10 +76,11 @@ static public UserschedJdbcDaoImpl getInstance() {
 
 				if (results.next()) {
 					user = new Usersched(Long.valueOf(results.getInt("id")), results.getString("name"),
-							results.getString("load"), results.getString("dtstart"), results.getString("dtend"), results.getString("status"));
+							results.getString("load"), results.getString("dtstart"), results.getString("dtend"),
+							results.getString("status"));
 				}
 
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -94,7 +93,7 @@ static public UserschedJdbcDaoImpl getInstance() {
 	public List<Usersched> findByName(String name, String load, String dtstart, String dtend, String status) {
 		List<Usersched> users = new ArrayList<>();
 
-		String sql = "SELECT id, name, load, dtstart, dtend, status FROM USERS WHERE name LIKE ? AND load LIKE ? AND dtstart LIKE ? AND dtend LIKE ? AND status LIKE ? ";
+		String sql = "SELECT id, name, load, dtstart, dtend, status FROM USERSCHED WHERE name LIKE ? AND load LIKE ? AND dtstart LIKE ? AND dtend LIKE ? AND status LIKE ? ";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -107,35 +106,36 @@ static public UserschedJdbcDaoImpl getInstance() {
 
 			while (results.next()) {
 				Usersched usersched = new Usersched(Long.valueOf(results.getInt("id")), results.getString("name"),
-						results.getString("load"), results.getString("dtstart"), results.getString("dtend"), results.getString("status"));
+						results.getString("load"), results.getString("dtstart"), results.getString("dtend"),
+						results.getString("status"));
 				users.add(usersched);
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 
 		return users;
 	}
-	
+
 	private String createSearchValue(String string) {
-		
+
 		String value;
-		
+
 		if (StringUtils.isBlank(string)) {
 			value = "%";
 		} else {
 			value = string;
 		}
-		
+
 		return value;
 	}
-	
+
 	@Override
 	public void add(Usersched usersched) {
-		
-		String insertSql = "INSERT INTO USERS (name, load, dtstart, dtend, status) VALUES (?, ?, ?, ?, ?)";
+
+		String insertSql = "INSERT INTO USERSCHED (name, load, dtstart, dtend, status) VALUES (?, ?, ?, ?, ?)";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(insertSql)) {
 
@@ -154,7 +154,7 @@ static public UserschedJdbcDaoImpl getInstance() {
 
 	@Override
 	public void update(Usersched usersched) {
-		String updateSql = "UPDATE user SET name = ?, load = ?, dtstart = ?, dtend = ?, status = ? WHERE id = ?";
+		String updateSql = "UPDATE usersched SET name = ?, load = ?, dtstart = ?, dtend = ?, status = ? WHERE id = ?";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
 
@@ -166,7 +166,7 @@ static public UserschedJdbcDaoImpl getInstance() {
 			ps.setString(6, usersched.getStatus());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -174,7 +174,7 @@ static public UserschedJdbcDaoImpl getInstance() {
 
 	@Override
 	public void delete(Long id) {
-		String updateSql = "DELETE FROM users WHERE id = ?";
+		String updateSql = "DELETE FROM usersched WHERE id = ?";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
 
@@ -187,7 +187,6 @@ static public UserschedJdbcDaoImpl getInstance() {
 		}
 	}
 
-	
 //	@Override
 //	public void delete1(Long tripid) {
 //		String updateSql = "DELETE FROM users WHERE tripid = ?";
@@ -202,6 +201,5 @@ static public UserschedJdbcDaoImpl getInstance() {
 //			throw new RuntimeException(e);
 //		}
 //	}
-
 
 }
