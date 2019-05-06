@@ -120,18 +120,6 @@ public class UserschedController {
 		}
 	}
 	
-//	@DELETE
-//	@Path("{tripid}")
-//	public Response deleteUsersched(@PathParam("tripid") String tripid) {
-//
-//		try {
-//			Long longTripId = Long.parseLong(tripid);
-//			userschedService.delete(longTripId);
-//			String result = "User deleted";
-//			return Response.status(200).entity(result).build();
-//		} catch (Exception e) {
-//			throw new WebApplicationException(e);
-//		}
-//	}
+
 
 }
