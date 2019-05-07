@@ -15,11 +15,7 @@ import com.ibm.training.bootcamp.rest.sample01.domain.User;
 
 public class UserJdbcDaoImpl extends Trucking implements UserDao {
 
-
 	private static UserJdbcDaoImpl INSTANCE;
-
-	
-
 
 	static public UserJdbcDaoImpl getInstance() {
 
@@ -202,5 +198,4 @@ public class UserJdbcDaoImpl extends Trucking implements UserDao {
 			throw new RuntimeException(e);
 		}
 	}
-
 }

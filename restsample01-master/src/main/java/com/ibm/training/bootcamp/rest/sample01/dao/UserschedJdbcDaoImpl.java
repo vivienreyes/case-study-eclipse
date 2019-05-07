@@ -58,7 +58,7 @@ public  class UserschedJdbcDaoImpl extends Trucking implements UserschedDao {
 
 	@Override
 	public List<Usersched> findAll() {
-		System.out.println("userschedjdbc findall");
+		
 		return findByName(null, null, null, null, null);
 	}
 
@@ -186,20 +186,5 @@ public  class UserschedJdbcDaoImpl extends Trucking implements UserschedDao {
 			throw new RuntimeException(e);
 		}
 	}
-
-//	@Override
-//	public void delete1(Long tripid) {
-//		String updateSql = "DELETE FROM users WHERE tripid = ?";
-//
-//		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
-//
-//			ps.setLong(1, tripid);
-//			ps.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new RuntimeException(e);
-//		}
-//	}
 
 }
